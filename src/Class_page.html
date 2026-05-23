@@ -527,70 +527,15 @@
         .dash-empty-message { text-align: center; color: #888; font-style: italic; padding: 20px; font-weight: 500;}
         
         /* --- MOBILE & TABLET OPTIMIZATION --- */
-                @media (max-width: 900px) {
-            /* 1. Maximize modal space on mobile */
-            .dash-modal-box {
-                width: 95%;
-                height: 90vh;
-                transform: translateY(10px) scale(0.98); /* Slight adjustment for entrance animation */
-            }
-            
-            /* 2. Stack the podium and list vertically */
-            .dash-content {
-                flex-direction: column;
-                overflow-y: auto; /* Move scrolling to the main container */
-                padding: 15px;
-                gap: 15px;
-            }
-
-            /* 3. Adjust panel sizing */
-            .dash-left, .dash-right {
-                flex: none; /* Stop them from trying to split the screen 50/50 */
-                height: auto;
-            }
-
-            /* 4. Fix podium squishing */
-            .dash-podium-display {
-                min-height: 220px; /* Give the podium enough vertical room */
-                gap: 5px; /* Reduce gap to fit mobile width */
-                padding-bottom: 10px;
-            }
-
-            /* 5. Scale down avatars and text slightly for mobile */
-            .dash-avatar {
-                width: 55px;
-                height: 55px;
-            }
-            
-            .dash-podium-item.rank-1 {
-                transform: scale(1.1); /* Slightly smaller pop-out for 1st place */
-            }
-
-            .dash-name {
-                font-size: 0.85rem;
-            }
-
-            .dash-xp-pill {
-                font-size: 11px;
-                padding: 3px 8px;
-            }
-
-            /* 6. Allow the list to expand naturally inside the scrolling parent */
-            .dash-list-container {
-                overflow-y: visible; 
-            }
-        }
         @media (max-width: 900px) {
-            .brand-logo {
-                height: 100px;
-                margin: -25px 0 -25px -10px;
-            }
+            /* --- 1. General Layout & Nav --- */
             .main-container { padding: 15px; }
+            .class-content { flex-direction: column; gap: 20px; }
+            .brand-logo { height: 100px; margin: -25px 0 -25px -10px; }
             nav { flex-direction: column; gap: 15px; }
             .nav-links { gap: 20px; font-size: 16px; }
-            .class-content { flex-direction: column; gap: 20px; }
 
-            /* Sidebar - Perfect Horizontal Scrolling */
+            /* --- 2. Sidebar (Horizontal Scrolling) --- */
             .sidebar {
                 flex-direction: row; flex-wrap: nowrap; overflow-x: auto; 
                 padding: 10px 5px; gap: 10px; width: 100%; align-items: center;
@@ -599,8 +544,8 @@
             .sidebar::-webkit-scrollbar { display: none; }
             
             /* Accordion Mobile Overrides */
-            .chapter-group { display: contents; } /* Unwraps groups for a continuous row */
-            .chapter-header { display: none; } /* Hide headers on mobile */
+            .chapter-group { display: contents; } 
+            .chapter-header { display: none; } 
             .chapter-content, .chapter-content.collapsed { 
                 flex-direction: row; gap: 10px; max-height: none !important; 
                 overflow: visible; opacity: 1 !important; pointer-events: auto !important; 
@@ -610,31 +555,74 @@
             /* Unit Item Mobile Styling */
             .unit-item { 
                 flex: 0 0 auto; font-size: 14px; padding: 10px 20px; 
-                white-space: nowrap; /* Prevents text squishing */
-                margin-left: 0; border-left: none; border-bottom: 4px solid transparent; 
+                white-space: nowrap; margin-left: 0; border-left: none; 
+                border-bottom: 4px solid transparent; 
             }
-            .unit-item.active { 
-                border-left: none; border-bottom: 4px solid #e67e22; /* Moves accent to bottom */
-            }
-            .unit-item:hover:not(.active) { 
-                transform: translateY(-3px); /* Hops up instead of twitching right */
-            }
+            .unit-item.active { border-left: none; border-bottom: 4px solid #e67e22; }
+            .unit-item:hover:not(.active) { transform: translateY(-3px); }
 
-            /* Lesson Card Mobile Styling */
+            /* --- 3. Lesson Card & Tabs --- */
             .lesson-card { padding: 25px 15px; }
             h1 { font-size: 24px; margin-bottom: 20px; }
-            .read-box, .task-box { padding: 20px; }
-            .tabs { gap: 10px; }
-            .tab-btn { font-size: 13px; padding: 15px 0; }
+            .read-box, .task-box { padding: 15px 10px; } 
+            
+            .tabs { gap: 8px; }
+            .tab-btn { 
+                font-size: 12px; 
+                padding: 12px 5px; 
+                white-space: normal; /* Allows text wrap */
+                flex-direction: column; /* Stacks emoji and text */
+                justify-content: center;
+                gap: 5px;
+                line-height: 1.2;
+            }
 
-            /* Dashboard Modal Mobile Fix */
-            .dash-content { flex-direction: column; overflow-y: auto; }
-            .dash-left, .dash-right { flex: none; width: 100%; }
+            /* Hide the actual iframe on mobile */
+            .read-box iframe { display: none; }
+            .read-box > #read-text > div:first-child {
+                height: auto !important; 
+                padding: 10px;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+
+            /* --- 4. Dashboard Modal --- */
+            .dash-modal-box {
+                width: 95%;
+                height: 90vh;
+                transform: translateY(10px) scale(0.98); 
+            }
+            
+            .dash-content {
+                flex-direction: column;
+                overflow-y: auto; 
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .dash-left, .dash-right {
+                flex: none; 
+                height: auto;
+                width: 100%;
+            }
+
+            .dash-podium-display {
+                min-height: 220px; 
+                gap: 5px; 
+                padding-bottom: 10px;
+            }
+
             .dash-podium-item { transform: scale(0.9); }
             .dash-podium-item.rank-1 { transform: scale(1.05); }
-            .dash-modal-box { height: 90vh; }
-        }
+            
+            .dash-avatar { width: 55px; height: 55px; }
+            .dash-name { font-size: 0.85rem; }
+            .dash-xp-pill { font-size: 11px; padding: 3px 8px; }
 
+            .dash-list-container { overflow-y: visible; }
+        }
+        
         @media (max-width: 480px) {
             .nav-links { gap: 15px; width: 100%; justify-content: space-around; }
             h1 { font-size: 20px; }
