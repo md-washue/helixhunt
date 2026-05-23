@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Security: Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://fonts.googleapis.com https://fonts.gstatic.com https://script.google.com https://script.googleusercontent.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://script.google.com; media-src 'self' data: blob:;">
-
-
     <title>Class - Biology Lab</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -212,8 +210,72 @@
             text-shadow: 0 2px 10px rgba(255,255,255,0.8); 
         }
 
-        /* --- UPDATED BUTTONS (FIXED HEIGHT) --- */
-        /* --- UPDATED BUTTONS (FIXED HEIGHT) --- */
+        /* --- NATIVE LEARNING STANDARD STYLES --- */
+        .standard-native-container {
+            padding: 10px;
+            color: #333;
+        }
+
+        .standard-chapter-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #e67e22;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .standard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .standard-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(26, 67, 33, 0.05);
+            border: 1px solid rgba(26, 67, 33, 0.1);
+            border-left: 5px solid #1a4321;
+            transition: transform 0.2s ease;
+        }
+
+        .standard-card:hover {
+            transform: translateX(5px);
+            border-left-color: #e67e22;
+        }
+
+        .standard-card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a4321;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .standard-sublist {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 10px;
+        }
+
+        .standard-sublist li {
+            font-size: 14px;
+            color: #555;
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .standard-sublist li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #e67e22;
+            font-weight: bold;
+        }
+
         .tabs { 
             display: flex; 
             gap: 15px; 
@@ -795,6 +857,104 @@
             { "id": 13, "name": "Samurai", "iconFile": "avatar_13_icon.png" }
         ];
 
+
+        // --- CENTRALIZED LEARNING STANDARDS DATABASE ---
+        const standardsDatabase = {
+            45: {
+                chapter: "Chapter 4: Chemical Composition in a Cell",
+                standards: [
+                    { title: "4.5.1 List the elements in nucleic acids." },
+                    { title: "4.5.2 Explain the structure of nucleotides:", sublist: ["(i) nitrogenous base.", "(ii) ribose or deoxyribose sugars.", "(iii) phosphate."] },
+                    { title: "4.5.3 Describe the structure of the nucleic acids:", sublist: ["(i) deoxyribonucleic acid (DNA).", "(ii) ribonucleic acid (RNA)."] },
+                    { title: "4.5.4 Justify the importance of nucleic acids in cells:", sublist: ["(i) carrier of hereditary information.", "(ii) production of proteins."] },
+                    { title: "4.5.5 Describe the formation of chromosomes from DNA and proteins." }
+                ]
+            },
+            61: {
+                chapter: "Chapter 6: Cell Division",
+                standards: [
+                    { title: "6.1.1 Describe:", sublist: ["(i) karyokinesis (nuclear division).", "(ii) cytokinesis (cytoplasmic division)."] },
+                    { title: "6.1.2 Describe the terms:", sublist: ["haploid", "diploid", "chromatin", "homologous chromosomes", "paternal chromosome", "maternal chromosome"] }
+                ]
+            },
+            62: {
+                chapter: "Chapter 6: Cell Division",
+                standards: [
+                    { title: "6.2.1 Describe the phases in a cell cycle:", sublist: ["(i) interphase.", "(ii) G1 phase.", "(iii) S phase.", "(iv) G2 phase.", "(v) M phase.", "(vi) mitosis.", "(vii) cytokinesis."] },
+                    { title: "6.2.2 Arrange the stages of mitosis in the correct order." },
+                    { title: "6.2.3 Communicate about the cell structure of each stage of mitosis and cytokinesis by using labelled diagrams." },
+                    { title: "6.2.4 Compare and contrast mitosis and cytokinesis in animal and plant cells." },
+                    { title: "6.2.5 Discuss the necessity of mitosis in:", sublist: ["(i) development of embryo.", "(ii) growth of organisms.", "(iii) healing of wounds on the skin.", "(iv) regeneration.", "(v) asexual reproduction."] }
+                ]
+            },
+            63: {
+                chapter: "Chapter 6: Cell Division",
+                standards: [
+                    { title: "6.3.1 State the meaning of meiosis." },
+                    { title: "6.3.2 Identity types of cells that undergo meiosis." },
+                    { title: "6.3.3 State the necessity of meiosis in:", sublist: ["the formation of gametes (gametogenesis).", "producing genetic variation.", "maintaining diploid chromosomal numbers from one generation to another."] },
+                    { title: "6.3.4 Explain the stages of meiosis in the correct order:", sublist: ["Meiosis I", "Meiosis II"] },
+                    { title: "6.3.5 Draw and label the cell structure in each stage of meiosis I, meiosis II and cytokinesis." },
+                    { title: "6.3.6 Compare and contrast meiosis and mitosis." }
+                ]
+            },
+            64: {
+                chapter: "Chapter 6: Cell Division",
+                standards: [
+                    { title: "6.4.1 Explain the effects of abnormal mitosis on human health:", sublist: ["(i) tumour.", "(ii) cancer."] },
+                    { title: "6.4.2 Evaluate the effects of abnormal meiosis on Down Syndrome individuals." }
+                ]
+            },
+            151: {
+                chapter: "Chapter 15: Sexual Reproduction, Development and Growth",
+                standards: [
+                    { title: "15.1.1 Characterise the anatomy of the:", sublist: ["(i) male reproductive system", "(ii) female reproductive system"] }
+                ]
+            },
+            152: {
+                chapter: "Chapter 15: Sexual Reproduction, Development and Growth",
+                standards: [
+                    { title: "15.2.1 Justify the necessity of gametogenesis." },
+                    { title: "15.2.2 Describe gamete formation:", sublist: ["spermatogenesis", "oogenesis"] },
+                    { title: "15.2.3 Identify the structure of:", sublist: ["Sperm (head, middle piece, tail)", "Graafian follicle (secondary oocyte, follicular cells)"] },
+                    { title: "15.2.4 Compare and contrast between spermatogenesis and oogenesis." }
+                ]
+            }
+        };
+        // --- DYNAMIC HTML GENERATOR ---
+        window.buildStandardsHTML = function(unitId) {
+            const data = standardsDatabase[unitId];
+            // If we haven't added this unit to the database yet, return null so it falls back to the PDF
+            if (!data) return null; 
+
+            let html = `
+                <div class="standard-native-container">
+                    <div class="standard-chapter-title">${data.chapter}</div>
+                    <div class="standard-list">
+            `;
+
+            data.standards.forEach(std => {
+                html += `
+                    <div class="standard-card">
+                        <div class="standard-card-title">${std.title}</div>
+                `;
+                
+                // If there are bullet points, generate the list
+                if (std.sublist && std.sublist.length > 0) {
+                    html += `<ul class="standard-sublist">`;
+                    std.sublist.forEach(item => {
+                        html += `<li>${item}</li>`;
+                    });
+                    html += `</ul>`;
+                }
+                
+                html += `</div>`; // Close card
+            });
+
+            html += `</div></div>`; // Close container
+            return html;
+        };
+
         window.updateHeaderAvatarDisplay = function() {
             const savedAvatarId = localStorage.getItem('studentAvatarId') || 1; 
             const imgElement = document.getElementById('asset_avatar_' + savedAvatarId);
@@ -1087,9 +1247,15 @@
             // 2. Set the Title
             document.getElementById('unit-title').innerText = data.title;
 
-            // 2.5 Render the Learning Standard PDF
+            // 2.5 Render the Learning Standard (Native HTML prioritized over PDF)
             const standardContainer = document.getElementById('standard-text');
-            if (data.standard_pdf) {
+            const generatedHTML = window.buildStandardsHTML(unitId);
+
+            if (generatedHTML) {
+                // 1. If we have the data in our JS database, render the beautiful HTML cards
+                standardContainer.innerHTML = generatedHTML;
+            } else if (data.standard_pdf) {
+                // 2. Fallback: If we haven't typed out the data yet, show the old PDF
                 standardContainer.innerHTML = `
                     <div style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(26,67,33,0.08); border: 3px solid #e8f5e9; overflow: hidden; height: 650px; position: relative;">
                         <iframe src="${data.standard_pdf}#toolbar=0&navpanes=0&view=FitH" style="position: absolute; top: -5px; left: -5px; width: calc(100% + 30px); height: calc(100% + 10px); border: none; background: white;">
@@ -1103,6 +1269,7 @@
                     </div>
                 `;
             } else {
+                // 3. Fallback: Empty state
                 standardContainer.innerHTML = window.getEmptyState('standard');
             }
             
