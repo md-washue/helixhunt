@@ -1103,7 +1103,7 @@ export default class Game extends Phaser.Scene {
         const currentChapter = localStorage.getItem('selectedChapter') || 'Unit 4.5';
         
         // Your newly deployed Google Script URL!
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxryOSSf3t4oUMhNW-UJKS5lq69kJ6LDD5fjJe-cZ8eqis0Tf2o3gehON0AzAuqlcNlcw/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxfRdHnp52wlgIP-CQIYHq_YyYoEqlHaOTigIj4-Xik2QhKbbrvp9q38Cr9GKQrNRap/exec';
 
         if (studentEmail && this.xp > 0) {
             fetch(scriptURL, {
