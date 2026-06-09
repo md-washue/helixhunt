@@ -220,9 +220,13 @@
             .then(response => response.json())
             .then(responseObject => {
                 if (responseObject.result === "success") {
-                    // Updated message!
-                    showToast("Success! You are registered. You can now log in and start your mission!");
-                    form.reset();
+                    // Update the message to inform them of the redirect
+                    showToast("Success! Registered. Redirecting to login...");
+                    
+                    // Wait 2.5 seconds, then redirect
+                    setTimeout(() => {
+                        window.location.href = "log_in.html";
+                    }, 2500);
                 } else {
                     showToast("Error: " + (responseObject.message || "Unknown error"), true);
                 }
