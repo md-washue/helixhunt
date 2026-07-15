@@ -200,7 +200,7 @@
 
         // 4. SUBMIT FORM
         const form = document.getElementById('registration-form');
-        form.addEventListener('submit', e => {
+        form.addEventListener('submit', async e => {
             e.preventDefault();
             
             const submitBtn = form.querySelector('.enter-btn');
@@ -210,8 +210,16 @@
 
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-
             data.action = "signup"; 
+
+            data.password = await hashPassword(data.password);
+
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: JSON.stringify(data) 
+            })
+
+    
 
             fetch(scriptURL, { 
                 method: 'POST', 
