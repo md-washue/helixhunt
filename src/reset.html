@@ -65,6 +65,7 @@
         <button id="toast-close" onclick="closeToast()">&times;</button>
     </div>
 
+
     <script>
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxfRdHnp52wlgIP-CQIYHq_YyYoEqlHaOTigIj4-Xik2QhKbbrvp9q38Cr9GKQrNRap/exec';
         
@@ -83,26 +84,38 @@
         }
         function closeToast() { document.getElementById('toast-notification').classList.remove('show'); }
 
+        // --- ADD HASHING FUNCTION ---
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
         // Boot user out immediately if they arrived without a token
         if (!urlToken) {
             showToast("Invalid reset link. Redirecting to login...", true);
             setTimeout(() => { window.location.href = "log_in.html"; }, 3000);
         }
 
-        document.getElementById('reset-form').addEventListener('submit', e => {
+        document.getElementById('reset-form').addEventListener('submit', async e => {
             e.preventDefault();
             const btn = document.getElementById('update-btn');
             btn.innerText = "UPDATING...";
             btn.disabled = true;
 
             const newPass = document.getElementById('new-password').value;
+            
+            // Secure Hashing
+            const hashedNewPass = await hashPassword(newPass);
 
             fetch(AUTH_SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify({ 
                     action: "reset_password", 
                     token: urlToken,
-                    newPassword: newPass
+                    newPassword: hashedNewPass
                 })
             })
             .then(res => res.json())
@@ -123,5 +136,6 @@
             });
         });
     </script>
+
 </body>
 </html>
