@@ -307,7 +307,6 @@
         <button id="toast-close" onclick="closeToast()">&times;</button>
     </div>
 
-    <!-- With true checking? -->
     <script>
         // --- TOAST NOTIFICATION LOGIC ---
         let toastTimeout;
@@ -338,12 +337,20 @@
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxfRdHnp52wlgIP-CQIYHq_YyYoEqlHaOTigIj4-Xik2QhKbbrvp9q38Cr9GKQrNRap/exec';
         const QUOTE_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRJv3wmn6UP6vTMTwqya9KsMsBI2U-tqj1BdLcZ55Tvw7Gu5muTXS2A7kPRs9NA5DHGNRC8tiiO9Jqe/pub?output=csv';
 
+        // --- ADD THIS HASHING FUNCTION ---
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
 
         // --- 2. AUTHENTICATION LOGIC ---
         const loginForm = document.getElementById('login-form');
         const submitBtn = document.getElementById('submit-btn');
 
-        loginForm.addEventListener('submit', e => {
+        loginForm.addEventListener('submit', async e => {
             e.preventDefault();
             
             const email = document.getElementById('user-email').value;
@@ -352,10 +359,13 @@
             submitBtn.innerText = "VERIFYING...";
             submitBtn.disabled = true;
 
+            // Hash the password before packaging it
+            const hashedPassword = await hashPassword(password);
+
             const dataPayload = {
                 action: "login",  
                 email: email,
-                password: password
+                password: hashedPassword // Sending the scrambled version!
             };
 
             fetch(AUTH_SCRIPT_URL, {
@@ -372,12 +382,12 @@
                     localStorage.setItem('sessionToken', data.token);
                     window.location.href = "index.html"; 
                 } else if (data.result === "status_false") {
-                    // Failure: Account not approved - REPLACED ALERT WITH TOAST
+                    // Failure: Account not approved
                     showToast("Access Denied: Your account status is NOT active yet. Ask your teacher to approve you.", true);
                     submitBtn.innerText = "RESUME MISSION";
                     submitBtn.disabled = false;
                 } else {
-                    // Failure: Wrong password or email - REPLACED ALERT WITH TOAST
+                    // Failure: Wrong password or email
                     showToast("Invalid Email or Password. Please try again.", true);
                     submitBtn.innerText = "RESUME MISSION";
                     submitBtn.disabled = false;
@@ -385,7 +395,7 @@
             })
             .catch((error) => {
                 console.error("Error:", error);
-                // Network Error - REPLACED ALERT WITH TOAST
+                // Network Error
                 showToast("Connection Error. Check your internet.", true);
                 submitBtn.innerText = "RESUME MISSION";
                 submitBtn.disabled = false;
@@ -426,7 +436,6 @@
             }
         });
     </script>
-
 
 
 

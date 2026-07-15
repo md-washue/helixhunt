@@ -147,6 +147,15 @@
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxfRdHnp52wlgIP-CQIYHq_YyYoEqlHaOTigIj4-Xik2QhKbbrvp9q38Cr9GKQrNRap/exec';
         const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRJv3wmn6UP6vTMTwqya9KsMsBI2U-tqj1BdLcZ55Tvw7Gu5muTXS2A7kPRs9NA5DHGNRC8tiiO9Jqe/pub?output=csv';
 
+        // --- ADD HASHING FUNCTION ---
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
         // 2. PASSWORD TOGGLE
         const passwordInput = document.getElementById('password-input');
         const toggleBtn = document.getElementById('toggle-btn');
@@ -212,14 +221,8 @@
             const data = Object.fromEntries(formData.entries());
             data.action = "signup"; 
 
+            // Secure Hashing
             data.password = await hashPassword(data.password);
-
-            fetch(scriptURL, { 
-                method: 'POST', 
-                body: JSON.stringify(data) 
-            })
-
-    
 
             fetch(scriptURL, { 
                 method: 'POST', 
@@ -228,10 +231,7 @@
             .then(response => response.json())
             .then(responseObject => {
                 if (responseObject.result === "success") {
-                    // Update the message to inform them of the redirect
                     showToast("Success! Registered. Redirecting to login...");
-                    
-                    // Wait 2.5 seconds, then redirect
                     setTimeout(() => {
                         window.location.href = "log_in.html";
                     }, 2500);
@@ -249,5 +249,17 @@
             });
         });
     </script>
+
+    
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
