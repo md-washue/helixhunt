@@ -16,14 +16,24 @@
         .left-section { flex: 1.2; display: flex; align-items: flex-end; justify-content: center; position: relative; }
         .teacher-img { height: 105vh; margin-bottom: -5vh; margin-left: -100px; width: auto; object-fit: contain; filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.6)); opacity: 0; animation: slideInLeft 1s ease-out forwards; }
         .right-section { flex: 1; display: flex; align-items: center; justify-content: flex-start; padding-right: 8%; }
+        
         .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.9); padding: 50px 40px; border-radius: 24px; width: 450px; text-align: center; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); opacity: 0; animation: slideInRight 1s ease-out forwards; }
+        
+        .card-logo { height: 100px; width: auto; margin-bottom: 15px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1)); }
         h2 { color: #1a4321; margin-bottom: 10px; font-size: 32px; font-weight: 700; letter-spacing: -0.5px; }
         .subtitle { color: #555; font-size: 14px; margin-bottom: 35px; font-weight: 400; }
+        
         .input-box { position: relative; width: 100%; height: 60px; margin-bottom: 20px; background: rgba(255, 255, 255, 0.6); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.5); transition: all 0.3s ease; }
         .input-box:focus-within { background: rgba(255, 255, 255, 0.95); border: 1px solid #1a4321; box-shadow: 0 4px 15px rgba(26, 67, 33, 0.1); }
         .input-box input { width: 100%; height: 100%; background: transparent; border: none; outline: none; font-size: 16px; color: #1a4321; font-weight: 500; padding: 25px 50px 5px 20px; }
         .input-box label { position: absolute; top: 50%; left: 20px; transform: translateY(-50%); font-size: 15px; color: #666; pointer-events: none; transition: .3s ease-out; }
         .input-box input:focus ~ label, .input-box input:valid ~ label { top: 12px; font-size: 11px; color: #1a4321; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* Icon CSS from Login page */
+        .icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; fill: #1a4321; opacity: 0.4; transition: opacity 0.3s, fill 0.3s; pointer-events: none; }
+        .input-box:focus-within .icon { opacity: 1; fill: #1a4321; }
+        .toggle-password { cursor: pointer; pointer-events: auto; }
+
         .mission-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, #d4a017 0%, #b88a14 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(212, 160, 23, 0.2); letter-spacing: 1px; }
         .mission-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(212, 160, 23, 0.4); }
         .mission-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
@@ -48,13 +58,23 @@
         </div>
         <div class="right-section">
             <div class="glass-card">
+                <img src="web_assets/Logo.png" alt="Helix Hunter" class="card-logo">
                 <h2>Reset Password</h2>
-                <p class="subtitle">Enter your new secure password</p>
+                <p class="subtitle">Secure your lab access</p>
                 <form id="reset-form">
+                    
                     <div class="input-box">
                         <input type="password" id="new-password" required minlength="6">
                         <label>New Password</label>
+                        <svg class="icon toggle-password" onclick="toggleVisibility('new-password', this)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
                     </div>
+
+                    <div class="input-box">
+                        <input type="password" id="confirm-password" required minlength="6">
+                        <label>Confirm Password</label>
+                        <svg class="icon toggle-password" onclick="toggleVisibility('confirm-password', this)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    </div>
+
                     <button type="submit" class="mission-btn" id="update-btn">UPDATE PASSWORD</button>
                 </form>
             </div>
@@ -65,7 +85,6 @@
         <span id="toast-message">Message goes here</span>
         <button id="toast-close" onclick="closeToast()">&times;</button>
     </div>
-
 
     <script>
         const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxfRdHnp52wlgIP-CQIYHq_YyYoEqlHaOTigIj4-Xik2QhKbbrvp9q38Cr9GKQrNRap/exec';
@@ -85,7 +104,24 @@
         }
         function closeToast() { document.getElementById('toast-notification').classList.remove('show'); }
 
-        // --- ADD HASHING FUNCTION ---
+        // --- PASSWORD VISIBILITY TOGGLE ---
+        const eyeOpen = "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z";
+        const eyeClosed = "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.45-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.804 11.804 0 0 0 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z";
+
+        function toggleVisibility(inputId, svgElement) {
+            const input = document.getElementById(inputId);
+            const path = svgElement.querySelector('path');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                path.setAttribute('d', eyeClosed);
+            } else {
+                input.type = 'password';
+                path.setAttribute('d', eyeOpen);
+            }
+        }
+
+        // --- HASHING FUNCTION ---
         async function hashPassword(password) {
             const encoder = new TextEncoder();
             const data = encoder.encode(password);
@@ -102,11 +138,19 @@
 
         document.getElementById('reset-form').addEventListener('submit', async e => {
             e.preventDefault();
+            
+            const newPass = document.getElementById('new-password').value;
+            const confirmPass = document.getElementById('confirm-password').value;
+
+            // Password Match Validation
+            if (newPass !== confirmPass) {
+                showToast("Error: Passwords do not match!", true);
+                return; 
+            }
+
             const btn = document.getElementById('update-btn');
             btn.innerText = "UPDATING...";
             btn.disabled = true;
-
-            const newPass = document.getElementById('new-password').value;
             
             // Secure Hashing
             const hashedNewPass = await hashPassword(newPass);
@@ -137,6 +181,5 @@
             });
         });
     </script>
-
 </body>
 </html>
