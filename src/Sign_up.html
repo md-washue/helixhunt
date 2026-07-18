@@ -8,6 +8,13 @@
     <title>Student Registration - Biology Lab</title>
     <link rel="icon" type="image/png" href="web_assets/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        // If already logged in, redirect immediately to the dashboard
+        if (localStorage.getItem('sessionToken') && localStorage.getItem('studentName')) {
+            window.location.replace('index.html');
+        }
+    </script>
 </head>
 <style>
     /* --- GLOBAL RESET --- */
