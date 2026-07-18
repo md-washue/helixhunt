@@ -718,18 +718,13 @@
             document.getElementById('avatar-modal-overlay').classList.remove('show');
         }
 
-                // Save selection, update UI, AND push to Google Sheets database
+
+        // Save selection, update UI, AND push to Google Sheets database
         function selectAvatar(id) {
             // 1. Instantly update the UI so it feels fast for the student
             localStorage.setItem('studentAvatarId', id);
             updateHeaderAvatarDisplay(); 
             closeAvatarModal(); 
-            // --- 1. SESSION GREETING ---
-        const currentStudentName = localStorage.getItem('studentName');
-        const greetingElement = document.getElementById('greeting-text');
-        if (greetingElement && currentStudentName) {
-            greetingElement.innerText = "Hi, " + currentStudentName;
-        }
             
             // 2. Grab the student's email (you save this during login!)
             const studentEmail = localStorage.getItem('userEmail'); 
@@ -763,9 +758,20 @@
             .catch(err => console.error("Network error:", err));
         }
 
+
+
+        // --- 1. SESSION GREETING ---
+        // This is now OUTSIDE the function, so it runs immediately when the dashboard loads!
+        const currentStudentName = localStorage.getItem('studentName');
+        const greetingElement = document.getElementById('greeting-text');
+        if (greetingElement && currentStudentName) {
+            greetingElement.innerText = "Hi, " + currentStudentName;
+        }
+
         // --- 3. LEADERBOARD LOGIC ---
         const dashScriptURL = 'https://script.google.com/macros/s/AKfycbxfRdHnp52wlgIP-CQIYHq_YyYoEqlHaOTigIj4-Xik2QhKbbrvp9q38Cr9GKQrNRap/exec';
         
+
         let preloadedLeaderboardData = null;
 
         function preloadLeaderboard() {
