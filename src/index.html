@@ -374,6 +374,30 @@
             header { flex-direction: column; gap: 15px; }
         }
     </style>
+    <style>
+        /* Hide page initially to prevent flash of unauthenticated content */
+        html { visibility: hidden; opacity: 0; }
+    </style>
+    <script>
+        const authName = localStorage.getItem('studentName');
+        const authToken = localStorage.getItem('sessionToken');
+        
+        if (!authName || !authToken) {
+            localStorage.clear();
+            window.location.replace('log_in.html'); // Instantly kick out
+        } else {
+            // Reveal page if authenticated
+            document.documentElement.style.visibility = 'visible';
+            document.documentElement.style.opacity = '1';
+            document.documentElement.style.transition = 'opacity 0.4s ease';
+        }
+
+        // If already logged in, redirect immediately to the dashboard
+        if (localStorage.getItem('sessionToken') && localStorage.getItem('studentName')) {
+            window.location.replace('index.html');
+        }
+    </script>
+
 </head>
 <body>
 
@@ -633,15 +657,7 @@
 
 
     <script>
-        // --- 1. SESSION SECURITY & GREETING ---
-        const studentName = localStorage.getItem('studentName');
-        const sessionToken = localStorage.getItem('sessionToken');
-        if (!studentName || !sessionToken) {
-            localStorage.clear();
-            window.location.href = 'log_in.html';
-        } else {
-            document.getElementById('greeting-text').innerText = "Hi, " + studentName;
-        }
+        
 
         // --- 2. AVATAR SYSTEM LOGIC ---
         let allAvatars = [
