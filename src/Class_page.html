@@ -632,6 +632,26 @@
 
         }
     </style>
+    <!-- STRICT IMMEDIATE AUTH CHECK -->
+    <style>
+        /* Hide page initially to prevent flash of unauthenticated content */
+        html { visibility: hidden; opacity: 0; }
+    </style>
+    <script>
+        const authName = localStorage.getItem('studentName');
+        const authToken = localStorage.getItem('sessionToken');
+        
+        if (!authName || !authToken) {
+            localStorage.clear();
+            window.location.replace('log_in.html'); // Instantly kick out
+        } else {
+            // Reveal page if authenticated
+            document.documentElement.style.visibility = 'visible';
+            document.documentElement.style.opacity = '1';
+            document.documentElement.style.transition = 'opacity 0.4s ease';
+        }
+    </script>
+
 </head>
 <body>
     <div style="display: none;" id="parcel-hidden-assets">
@@ -819,16 +839,13 @@
         import cls152 from 'url:./web_assets/topics/15.2/class_15.2.pdf';
         
        
-        // --- AUTH & GREETING ---
-        const studentName = localStorage.getItem('studentName');
-        const sessionToken = localStorage.getItem('sessionToken');
-        if (!studentName || !sessionToken) { 
-            localStorage.clear(); 
-            window.location.href = 'log_in.html'; 
-        } else {
-            const greetingElement = document.getElementById('greeting-text');
-            if (greetingElement) greetingElement.innerText = "Hi, " + studentName;
+        // --- 1. SESSION GREETING ---
+        const currentStudentName = localStorage.getItem('studentName');
+        const greetingElement = document.getElementById('greeting-text');
+        if (greetingElement && currentStudentName) {
+            greetingElement.innerText = "Hi, " + currentStudentName;
         }
+        
 
         // --- ATTACH ALL FUNCTIONS TO 'WINDOW' SO HTML BUTTONS CAN FIND THEM IN THE MODULE ---
         const dashScriptURL = 'https://script.google.com/macros/s/AKfycbxfRdHnp52wlgIP-CQIYHq_YyYoEqlHaOTigIj4-Xik2QhKbbrvp9q38Cr9GKQrNRap/exec';
