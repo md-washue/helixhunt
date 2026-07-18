@@ -1115,7 +1115,6 @@ export default class Game extends Phaser.Scene {
                     action: 'save_xp_and_progress', // Updated to match your new script
                     email: studentEmail,
                     token: localStorage.getItem('sessionToken'),
-                    xp: this.xp,
                     chapterCompleted: currentChapter // Sending the badge to the cloud!
                 })
             })
