@@ -392,11 +392,9 @@
             document.documentElement.style.transition = 'opacity 0.4s ease';
         }
 
-        // If already logged in, redirect immediately to the dashboard
-        if (localStorage.getItem('sessionToken') && localStorage.getItem('studentName')) {
-            window.location.replace('index.html');
-        }
     </script>
+    
+
 
 </head>
 <body>
@@ -726,6 +724,12 @@
             localStorage.setItem('studentAvatarId', id);
             updateHeaderAvatarDisplay(); 
             closeAvatarModal(); 
+            // --- 1. SESSION GREETING ---
+        const currentStudentName = localStorage.getItem('studentName');
+        const greetingElement = document.getElementById('greeting-text');
+        if (greetingElement && currentStudentName) {
+            greetingElement.innerText = "Hi, " + currentStudentName;
+        }
             
             // 2. Grab the student's email (you save this during login!)
             const studentEmail = localStorage.getItem('userEmail'); 
