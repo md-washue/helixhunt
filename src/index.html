@@ -761,7 +761,7 @@
 
 
 
-        
+
         // --- 1. SESSION GREETING ---
         // This is now OUTSIDE the function, so it runs immediately when the dashboard loads!
         const currentStudentName = localStorage.getItem('studentName');
@@ -846,7 +846,6 @@
                     avatarHtml: getAvatarImgTag(idToUse),
                     badgeImg: highestBadgeUrl // Now using the real bundled URL!
                 };
-                // --- END PASTE ---
             });
 
             const sortedData = realClassData.sort((a, b) => b.xp - a.xp);
